@@ -1,27 +1,26 @@
 class PigLatinizer
   attr_accessor :text
 
-  def initialize
-    @text = text
-  end
+  # def initialize
+  #
+  # end
 
   def piglatinize(text)
-    binding.pry
-
-    # vowles text.scan(/[aeoui]/)
-    # consonants text.scan(/[bcdfghjklmnpqrstvwxyz]/)
-    word.split.collect do |word|
-      if word[0].include?(/[aeoui]/)
-        word << 'ay'
-      elsif word[0].include?('/[bcdfghjklmnpqrstvwxyz]/') && word[1].include?(/[bcdfghjklmnpqrstvwxyz]/)
-        letters = word[0, 2]
-        word.gsub(word[0, 2], "")
+    text.split.collect do |word|
+      first = word[0]
+      first_two = word[0, 2]
+      first_three = word[0, 3]
+      if first.scan(/[aeoui]/i).join == first
+        word << 'way'
+      elsif first_three.scan(/[bcdfghjklmnpqrstvwxyz]/i).join == first_three
+        word.gsub!(word[0, 3], "") << first_three << 'ay'
+      elsif first_two.scan(/[bcdfghjklmnpqrstvwxyz]/i).join == first_two
+        word.gsub!(word[0, 2], "") << first_two << 'ay'
+      else
+        word[0]= ""
+        word << first << 'ay'
       end
-    end
-
-
-
-
+    end.join(" ")
   end
 
 end
